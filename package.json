@@ -1,0 +1,15 @@
+{
+  "name": "@equisoft/equisoft-connect-sdk-typescript",
+  "version": "latest",
+  "description": "OpenAPI client for @equisoft/equisoft-connect-sdk-typescript",
+  "author": "OpenAPI-Generator",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^3.6"
+  }
+}
