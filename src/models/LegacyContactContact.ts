@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    AnyType,
-    AnyTypeFromJSON,
-    AnyTypeFromJSONTyped,
-    AnyTypeToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -34,10 +27,10 @@ export interface LegacyContactContact {
     id?: string;
     /**
      * Contact UUID
-     * @type {AnyType}
+     * @type {string}
      * @memberof LegacyContactContact
      */
-    uuid?: AnyType;
+    uuid?: string;
     /**
      * type of the contact
      * @type {string}
@@ -105,7 +98,7 @@ export function LegacyContactContactFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'uuid': !exists(json, 'uuid') ? undefined : AnyTypeFromJSON(json['uuid']),
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'typeContact': !exists(json, 'typeContact') ? undefined : json['typeContact'],
         'indOrg': !exists(json, 'indOrg') ? undefined : json['indOrg'],
         'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
@@ -128,7 +121,7 @@ export function LegacyContactContactToJSON(value?: LegacyContactContact | null):
     return {
         
         'id': value.id,
-        'uuid': AnyTypeToJSON(value.uuid),
+        'uuid': value.uuid,
         'typeContact': value.typeContact,
         'indOrg': value.indOrg,
         'displayName': value.displayName,

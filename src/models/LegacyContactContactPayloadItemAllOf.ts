@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    AnyType,
-    AnyTypeFromJSON,
-    AnyTypeFromJSONTyped,
-    AnyTypeToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -64,10 +57,10 @@ export interface LegacyContactContactPayloadItemAllOf {
     smoker?: string;
     /**
      * Smoker status since date.
-     * @type {AnyType}
+     * @type {string}
      * @memberof LegacyContactContactPayloadItemAllOf
      */
-    smokerSince?: AnyType;
+    smokerSince?: string;
     /**
      * phone number of the contact at home
      * @type {string}
@@ -302,7 +295,7 @@ export function LegacyContactContactPayloadItemAllOfFromJSONTyped(json: any, ign
         'sin': !exists(json, 'sin') ? undefined : json['sin'],
         'birthdate': !exists(json, 'birthdate') ? undefined : json['birthdate'],
         'smoker': !exists(json, 'smoker') ? undefined : json['smoker'],
-        'smokerSince': !exists(json, 'smokerSince') ? undefined : AnyTypeFromJSON(json['smokerSince']),
+        'smokerSince': !exists(json, 'smokerSince') ? undefined : json['smokerSince'],
         'phoneHome': !exists(json, 'phoneHome') ? undefined : json['phoneHome'],
         'phoneHomeSecond': !exists(json, 'phoneHomeSecond') ? undefined : json['phoneHomeSecond'],
         'phoneAssistant': !exists(json, 'phoneAssistant') ? undefined : json['phoneAssistant'],
@@ -357,7 +350,7 @@ export function LegacyContactContactPayloadItemAllOfToJSON(value?: LegacyContact
         'sin': value.sin,
         'birthdate': value.birthdate,
         'smoker': value.smoker,
-        'smokerSince': AnyTypeToJSON(value.smokerSince),
+        'smokerSince': value.smokerSince,
         'phoneHome': value.phoneHome,
         'phoneHomeSecond': value.phoneHomeSecond,
         'phoneAssistant': value.phoneAssistant,

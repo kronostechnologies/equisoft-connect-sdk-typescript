@@ -36,12 +36,6 @@ import {
 export interface MovementMovement {
     /**
      * 
-     * @type {string}
-     * @memberof MovementMovement
-     */
-    type?: MovementMovementTypeEnum;
-    /**
-     * 
      * @type {number}
      * @memberof MovementMovement
      */
@@ -123,7 +117,6 @@ export function MovementMovementFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'type': !exists(json, 'type') ? undefined : json['type'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'status': !exists(json, 'status') ? undefined : json['status'],
         'availableAction': !exists(json, 'availableAction') ? undefined : json['availableAction'],
@@ -145,7 +138,6 @@ export function MovementMovementToJSON(value?: MovementMovement | null): any {
     }
     return {
         
-        'type': value.type,
         'id': value.id,
         'status': value.status,
         'availableAction': value.availableAction,
@@ -156,18 +148,6 @@ export function MovementMovementToJSON(value?: MovementMovement | null): any {
         'cancelledDate': value.cancelledDate,
         'cancelledBy': MovementUserToJSON(value.cancelledBy),
     };
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum MovementMovementTypeEnum {
-    MOVE = 'MOVE',
-    COPY = 'COPY',
-    REASSIGNMENT = 'REASSIGNMENT',
-    CLIENTBASE_USING_FILE = 'CLIENTBASE_USING_FILE',
-    CLIENTBASE_USING_DISTLIST = 'CLIENTBASE_USING_DISTLIST'
 }
 
 

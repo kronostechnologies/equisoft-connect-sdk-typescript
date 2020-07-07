@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    AnyType,
-    AnyTypeFromJSON,
-    AnyTypeToJSON,
     ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
@@ -149,7 +146,7 @@ export class TasksApi extends runtime.BaseAPI {
     /**
      * Delete a task.
      */
-    async deleteTaskRaw(requestParameters: DeleteTaskRequest): Promise<runtime.ApiResponse<AnyType>> {
+    async deleteTaskRaw(requestParameters: DeleteTaskRequest): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
             throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling deleteTask.');
         }
@@ -174,13 +171,13 @@ export class TasksApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => AnyTypeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * Delete a task.
      */
-    async deleteTask(requestParameters: DeleteTaskRequest): Promise<AnyType> {
+    async deleteTask(requestParameters: DeleteTaskRequest): Promise<object> {
         const response = await this.deleteTaskRaw(requestParameters);
         return await response.value();
     }

@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    AnyType,
-    AnyTypeFromJSON,
-    AnyTypeToJSON,
     CalendarsCalendar,
     CalendarsCalendarFromJSON,
     CalendarsCalendarToJSON,
@@ -175,7 +172,7 @@ export class EventsApi extends runtime.BaseAPI {
      * **Note:** To delete an instance of recurring event, use the master event id suffixed by the original start date of the occurrence.
      * Delete an event.
      */
-    async deleteEventRaw(requestParameters: DeleteEventRequest): Promise<runtime.ApiResponse<AnyType>> {
+    async deleteEventRaw(requestParameters: DeleteEventRequest): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
             throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling deleteEvent.');
         }
@@ -200,14 +197,14 @@ export class EventsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => AnyTypeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * **Note:** To delete an instance of recurring event, use the master event id suffixed by the original start date of the occurrence.
      * Delete an event.
      */
-    async deleteEvent(requestParameters: DeleteEventRequest): Promise<AnyType> {
+    async deleteEvent(requestParameters: DeleteEventRequest): Promise<object> {
         const response = await this.deleteEventRaw(requestParameters);
         return await response.value();
     }

@@ -14,10 +14,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    AnyType,
-    AnyTypeFromJSON,
-    AnyTypeFromJSONTyped,
-    AnyTypeToJSON,
     LegacyContactContact,
     LegacyContactContactFromJSON,
     LegacyContactContactFromJSONTyped,
@@ -42,10 +38,10 @@ export interface LegacyContactContactPayloadItem {
     id?: string;
     /**
      * Contact UUID
-     * @type {AnyType}
+     * @type {string}
      * @memberof LegacyContactContactPayloadItem
      */
-    uuid?: AnyType;
+    uuid?: string;
     /**
      * type of the contact
      * @type {string}
@@ -138,10 +134,10 @@ export interface LegacyContactContactPayloadItem {
     smoker?: string;
     /**
      * Smoker status since date.
-     * @type {AnyType}
+     * @type {string}
      * @memberof LegacyContactContactPayloadItem
      */
-    smokerSince?: AnyType;
+    smokerSince?: string;
     /**
      * phone number of the contact at home
      * @type {string}
@@ -371,7 +367,7 @@ export function LegacyContactContactPayloadItemFromJSONTyped(json: any, ignoreDi
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'uuid': !exists(json, 'uuid') ? undefined : AnyTypeFromJSON(json['uuid']),
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'typeContact': !exists(json, 'typeContact') ? undefined : json['typeContact'],
         'indOrg': !exists(json, 'indOrg') ? undefined : json['indOrg'],
         'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
@@ -387,7 +383,7 @@ export function LegacyContactContactPayloadItemFromJSONTyped(json: any, ignoreDi
         'sin': !exists(json, 'sin') ? undefined : json['sin'],
         'birthdate': !exists(json, 'birthdate') ? undefined : json['birthdate'],
         'smoker': !exists(json, 'smoker') ? undefined : json['smoker'],
-        'smokerSince': !exists(json, 'smokerSince') ? undefined : AnyTypeFromJSON(json['smokerSince']),
+        'smokerSince': !exists(json, 'smokerSince') ? undefined : json['smokerSince'],
         'phoneHome': !exists(json, 'phoneHome') ? undefined : json['phoneHome'],
         'phoneHomeSecond': !exists(json, 'phoneHomeSecond') ? undefined : json['phoneHomeSecond'],
         'phoneAssistant': !exists(json, 'phoneAssistant') ? undefined : json['phoneAssistant'],
@@ -437,7 +433,7 @@ export function LegacyContactContactPayloadItemToJSON(value?: LegacyContactConta
     return {
         
         'id': value.id,
-        'uuid': AnyTypeToJSON(value.uuid),
+        'uuid': value.uuid,
         'typeContact': value.typeContact,
         'indOrg': value.indOrg,
         'displayName': value.displayName,
@@ -453,7 +449,7 @@ export function LegacyContactContactPayloadItemToJSON(value?: LegacyContactConta
         'sin': value.sin,
         'birthdate': value.birthdate,
         'smoker': value.smoker,
-        'smokerSince': AnyTypeToJSON(value.smokerSince),
+        'smokerSince': value.smokerSince,
         'phoneHome': value.phoneHome,
         'phoneHomeSecond': value.phoneHomeSecond,
         'phoneAssistant': value.phoneAssistant,
