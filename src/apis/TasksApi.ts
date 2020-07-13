@@ -18,9 +18,24 @@ import {
     ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    InternalNotesCreateNotePayload,
+    InternalNotesCreateNotePayloadFromJSON,
+    InternalNotesCreateNotePayloadToJSON,
+    InternalNotesCreateNoteResponse,
+    InternalNotesCreateNoteResponseFromJSON,
+    InternalNotesCreateNoteResponseToJSON,
+    InternalNotesHistoryType,
+    InternalNotesHistoryTypeFromJSON,
+    InternalNotesHistoryTypeToJSON,
     InternalNotesNoteList,
     InternalNotesNoteListFromJSON,
     InternalNotesNoteListToJSON,
+    InternalNotesPatchNotePayload,
+    InternalNotesPatchNotePayloadFromJSON,
+    InternalNotesPatchNotePayloadToJSON,
+    InternalNotesPatchNoteResponse,
+    InternalNotesPatchNoteResponseFromJSON,
+    InternalNotesPatchNoteResponseToJSON,
     TasksCreateTaskPayload,
     TasksCreateTaskPayloadFromJSON,
     TasksCreateTaskPayloadToJSON,
@@ -55,6 +70,12 @@ export interface CreateTaskRequest {
     acceptLanguage?: string;
 }
 
+export interface CreateTaskInternalNoteRequest {
+    taskId: string;
+    internalNotesCreateNotePayload: InternalNotesCreateNotePayload;
+    acceptLanguage?: string;
+}
+
 export interface DeleteTaskRequest {
     taskId: string;
 }
@@ -66,6 +87,7 @@ export interface GetTaskRequest {
 
 export interface GetTaskInternalNoteListRequest {
     taskId: string;
+    history?: InternalNotesHistoryType;
     acceptLanguage?: string;
 }
 
@@ -85,6 +107,19 @@ export interface ListTasksRequest {
 export interface PatchTaskRequest {
     taskId: string;
     tasksPatchTaskPayload: TasksPatchTaskPayload;
+    acceptLanguage?: string;
+}
+
+export interface PatchTaskInternalNoteRequest {
+    taskId: string;
+    noteId: string;
+    internalNotesPatchNotePayload: InternalNotesPatchNotePayload;
+    acceptLanguage?: string;
+}
+
+export interface SoftDeleteTaskInternalNoteRequest {
+    taskId: string;
+    noteId: string;
     acceptLanguage?: string;
 }
 
@@ -140,6 +175,56 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async createTask(requestParameters: CreateTaskRequest): Promise<TasksCreateTaskResponse> {
         const response = await this.createTaskRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Add an internal note to a task.
+     */
+    async createTaskInternalNoteRaw(requestParameters: CreateTaskInternalNoteRequest): Promise<runtime.ApiResponse<InternalNotesCreateNoteResponse>> {
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling createTaskInternalNote.');
+        }
+
+        if (requestParameters.internalNotesCreateNotePayload === null || requestParameters.internalNotesCreateNotePayload === undefined) {
+            throw new runtime.RequiredError('internalNotesCreateNotePayload','Required parameter requestParameters.internalNotesCreateNotePayload was null or undefined when calling createTaskInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/tasks/{taskId}/notes`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: InternalNotesCreateNotePayloadToJSON(requestParameters.internalNotesCreateNotePayload),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InternalNotesCreateNoteResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Add an internal note to a task.
+     */
+    async createTaskInternalNote(requestParameters: CreateTaskInternalNoteRequest): Promise<InternalNotesCreateNoteResponse> {
+        const response = await this.createTaskInternalNoteRaw(requestParameters);
         return await response.value();
     }
 
@@ -234,6 +319,10 @@ export class TasksApi extends runtime.BaseAPI {
         }
 
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.history !== undefined) {
+            queryParameters['history'] = requestParameters.history;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -390,6 +479,107 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async patchTask(requestParameters: PatchTaskRequest): Promise<TasksPatchTaskResponse> {
         const response = await this.patchTaskRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Add an internal note to a task.
+     */
+    async patchTaskInternalNoteRaw(requestParameters: PatchTaskInternalNoteRequest): Promise<runtime.ApiResponse<InternalNotesPatchNoteResponse>> {
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling patchTaskInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling patchTaskInternalNote.');
+        }
+
+        if (requestParameters.internalNotesPatchNotePayload === null || requestParameters.internalNotesPatchNotePayload === undefined) {
+            throw new runtime.RequiredError('internalNotesPatchNotePayload','Required parameter requestParameters.internalNotesPatchNotePayload was null or undefined when calling patchTaskInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/tasks/{taskId}/notes/{noteId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: InternalNotesPatchNotePayloadToJSON(requestParameters.internalNotesPatchNotePayload),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InternalNotesPatchNoteResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Add an internal note to a task.
+     */
+    async patchTaskInternalNote(requestParameters: PatchTaskInternalNoteRequest): Promise<InternalNotesPatchNoteResponse> {
+        const response = await this.patchTaskInternalNoteRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Soft delete an internal note for a task.
+     */
+    async softDeleteTaskInternalNoteRaw(requestParameters: SoftDeleteTaskInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling softDeleteTaskInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling softDeleteTaskInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/tasks/{taskId}/notes/{noteId}/softDelete`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Soft delete an internal note for a task.
+     */
+    async softDeleteTaskInternalNote(requestParameters: SoftDeleteTaskInternalNoteRequest): Promise<object> {
+        const response = await this.softDeleteTaskInternalNoteRaw(requestParameters);
         return await response.value();
     }
 

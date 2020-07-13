@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface InternalNotesAuthor {
     /**
      * Unique numerical identifier.
-     * @type {string}
+     * @type {number}
      * @memberof InternalNotesAuthor
      */
-    id?: string;
+    id?: number;
     /**
      * Globally unique identifier.
      * @type {string}

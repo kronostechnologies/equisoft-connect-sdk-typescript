@@ -21,10 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface InternalNotesNoteRevision {
     /**
      * Unique numerical identifier.
+     * @type {number}
+     * @memberof InternalNotesNoteRevision
+     */
+    id: number;
+    /**
+     * 
      * @type {string}
      * @memberof InternalNotesNoteRevision
      */
-    id: string;
+    type?: string;
     /**
      * Note content
      * @type {string}
@@ -50,6 +56,7 @@ export function InternalNotesNoteRevisionFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'id': json['id'],
+        'type': !exists(json, 'type') ? undefined : json['type'],
         'content': json['content'],
         'createdAt': (new Date(json['createdAt'])),
     };
@@ -65,6 +72,7 @@ export function InternalNotesNoteRevisionToJSON(value?: InternalNotesNoteRevisio
     return {
         
         'id': value.id,
+        'type': value.type,
         'content': value.content,
         'createdAt': (value.createdAt.toISOString()),
     };

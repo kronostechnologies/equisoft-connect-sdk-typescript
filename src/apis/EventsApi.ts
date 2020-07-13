@@ -51,13 +51,34 @@ import {
     EventsTransferToCompletedResponse,
     EventsTransferToCompletedResponseFromJSON,
     EventsTransferToCompletedResponseToJSON,
+    InternalNotesCreateNotePayload,
+    InternalNotesCreateNotePayloadFromJSON,
+    InternalNotesCreateNotePayloadToJSON,
+    InternalNotesCreateNoteResponse,
+    InternalNotesCreateNoteResponseFromJSON,
+    InternalNotesCreateNoteResponseToJSON,
+    InternalNotesHistoryType,
+    InternalNotesHistoryTypeFromJSON,
+    InternalNotesHistoryTypeToJSON,
     InternalNotesNoteList,
     InternalNotesNoteListFromJSON,
     InternalNotesNoteListToJSON,
+    InternalNotesPatchNotePayload,
+    InternalNotesPatchNotePayloadFromJSON,
+    InternalNotesPatchNotePayloadToJSON,
+    InternalNotesPatchNoteResponse,
+    InternalNotesPatchNoteResponseFromJSON,
+    InternalNotesPatchNoteResponseToJSON,
 } from '../models';
 
 export interface CreateEventRequest {
     eventsCreateEventPayload: EventsCreateEventPayload;
+    acceptLanguage?: string;
+}
+
+export interface CreateEventInternalNoteRequest {
+    eventId: string;
+    internalNotesCreateNotePayload: InternalNotesCreateNotePayload;
     acceptLanguage?: string;
 }
 
@@ -86,6 +107,7 @@ export interface GetEventInstancesRequest {
 
 export interface GetEventInternalNoteListRequest {
     eventId: string;
+    history?: InternalNotesHistoryType;
     acceptLanguage?: string;
 }
 
@@ -110,6 +132,19 @@ export interface ListEventsRequest {
 export interface PatchEventRequest {
     eventId: string;
     eventsPatchEventPayload: EventsPatchEventPayload;
+    acceptLanguage?: string;
+}
+
+export interface PatchEventInternalNoteRequest {
+    eventId: string;
+    noteId: string;
+    internalNotesPatchNotePayload: InternalNotesPatchNotePayload;
+    acceptLanguage?: string;
+}
+
+export interface SoftDeleteEventInternalNoteRequest {
+    eventId: string;
+    noteId: string;
     acceptLanguage?: string;
 }
 
@@ -165,6 +200,56 @@ export class EventsApi extends runtime.BaseAPI {
      */
     async createEvent(requestParameters: CreateEventRequest): Promise<EventsCreateEventResponse> {
         const response = await this.createEventRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Add an internal note to and event.
+     */
+    async createEventInternalNoteRaw(requestParameters: CreateEventInternalNoteRequest): Promise<runtime.ApiResponse<InternalNotesCreateNoteResponse>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling createEventInternalNote.');
+        }
+
+        if (requestParameters.internalNotesCreateNotePayload === null || requestParameters.internalNotesCreateNotePayload === undefined) {
+            throw new runtime.RequiredError('internalNotesCreateNotePayload','Required parameter requestParameters.internalNotesCreateNotePayload was null or undefined when calling createEventInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:event"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/events/{eventId}/notes`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: InternalNotesCreateNotePayloadToJSON(requestParameters.internalNotesCreateNotePayload),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InternalNotesCreateNoteResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Add an internal note to and event.
+     */
+    async createEventInternalNote(requestParameters: CreateEventInternalNoteRequest): Promise<InternalNotesCreateNoteResponse> {
+        const response = await this.createEventInternalNoteRaw(requestParameters);
         return await response.value();
     }
 
@@ -363,6 +448,10 @@ export class EventsApi extends runtime.BaseAPI {
         }
 
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.history !== undefined) {
+            queryParameters['history'] = requestParameters.history;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -564,6 +653,107 @@ export class EventsApi extends runtime.BaseAPI {
      */
     async patchEvent(requestParameters: PatchEventRequest): Promise<EventsPatchEventResponse> {
         const response = await this.patchEventRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Add an internal note to and event.
+     */
+    async patchEventInternalNoteRaw(requestParameters: PatchEventInternalNoteRequest): Promise<runtime.ApiResponse<InternalNotesPatchNoteResponse>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling patchEventInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling patchEventInternalNote.');
+        }
+
+        if (requestParameters.internalNotesPatchNotePayload === null || requestParameters.internalNotesPatchNotePayload === undefined) {
+            throw new runtime.RequiredError('internalNotesPatchNotePayload','Required parameter requestParameters.internalNotesPatchNotePayload was null or undefined when calling patchEventInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:event"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/events/{eventId}/notes/{noteId}`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: InternalNotesPatchNotePayloadToJSON(requestParameters.internalNotesPatchNotePayload),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InternalNotesPatchNoteResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Add an internal note to and event.
+     */
+    async patchEventInternalNote(requestParameters: PatchEventInternalNoteRequest): Promise<InternalNotesPatchNoteResponse> {
+        const response = await this.patchEventInternalNoteRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Soft delete an internal note for and event.
+     */
+    async softDeleteEventInternalNoteRaw(requestParameters: SoftDeleteEventInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling softDeleteEventInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling softDeleteEventInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:event"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/events/{eventId}/notes/{noteId}/softDelete`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Soft delete an internal note for and event.
+     */
+    async softDeleteEventInternalNote(requestParameters: SoftDeleteEventInternalNoteRequest): Promise<object> {
+        const response = await this.softDeleteEventInternalNoteRaw(requestParameters);
         return await response.value();
     }
 

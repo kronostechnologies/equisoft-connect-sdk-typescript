@@ -36,10 +36,10 @@ import {
 export interface InternalNotesNote {
     /**
      * Unique numerical identifier.
-     * @type {string}
+     * @type {number}
      * @memberof InternalNotesNote
      */
-    id?: string;
+    id?: number;
     /**
      * 
      * @type {InternalNotesAuthor}
