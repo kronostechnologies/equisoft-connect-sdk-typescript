@@ -18,10 +18,10 @@
 export interface InternalNotesPatchNoteResponse {
     /**
      * Unique numerical identifier of the note.
-     * @type {string}
+     * @type {number}
      * @memberof InternalNotesPatchNoteResponse
      */
-    id: string;
+    id: number;
 }
 
 export function InternalNotesPatchNoteResponseFromJSON(json: any): InternalNotesPatchNoteResponse {

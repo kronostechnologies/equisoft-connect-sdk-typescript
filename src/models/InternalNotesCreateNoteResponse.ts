@@ -18,10 +18,10 @@
 export interface InternalNotesCreateNoteResponse {
     /**
      * Unique numerical identifier of the created note.
-     * @type {string}
+     * @type {number}
      * @memberof InternalNotesCreateNoteResponse
      */
-    id: string;
+    id: number;
 }
 
 export function InternalNotesCreateNoteResponseFromJSON(json: any): InternalNotesCreateNoteResponse {
