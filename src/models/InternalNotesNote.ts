@@ -34,7 +34,7 @@ export interface InternalNotesNote {
      * @type {number}
      * @memberof InternalNotesNote
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {InternalNotesAuthor}
@@ -77,7 +77,7 @@ export function InternalNotesNoteFromJSONTyped(json: any, _ignoreDiscriminator: 
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'id': json['id'],
         'author': InternalNotesAuthorFromJSON(json['author']),
         'firstRevisionCreatedAt': (new Date(json['firstRevisionCreatedAt'])),
         'accessRights': AccessRightsFromJSON(json['accessRights']),

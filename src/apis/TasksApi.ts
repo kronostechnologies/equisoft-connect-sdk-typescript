@@ -42,6 +42,12 @@ import {
     TasksTransferToCompletedResponseFromJSON,
 } from '../models';
 
+export interface ArchiveTaskInternalNoteRequest {
+    taskId: string;
+    noteId: number;
+    acceptLanguage?: string;
+}
+
 export interface CreateTaskRequest {
     tasksCreateTaskPayload: TasksCreateTaskPayload;
     acceptLanguage?: string;
@@ -89,14 +95,8 @@ export interface PatchTaskRequest {
 
 export interface PatchTaskInternalNoteRequest {
     taskId: string;
-    noteId: string;
+    noteId: number;
     internalNotesPatchNotePayload: InternalNotesPatchNotePayload;
-    acceptLanguage?: string;
-}
-
-export interface SoftDeleteTaskInternalNoteRequest {
-    taskId: string;
-    noteId: string;
     acceptLanguage?: string;
 }
 
@@ -108,6 +108,53 @@ export interface TransferTaskToCompletedRequest {
  * 
  */
 export class TasksApi extends runtime.BaseAPI {
+
+    /**
+     * Archive an internal note for a task.
+     */
+    async archiveTaskInternalNoteRaw(requestParameters: ArchiveTaskInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling archiveTaskInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling archiveTaskInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/tasks/{taskId}/notes/{noteId}/archive`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Archive an internal note for a task.
+     */
+    async archiveTaskInternalNote(requestParameters: ArchiveTaskInternalNoteRequest): Promise<object> {
+        const response = await this.archiveTaskInternalNoteRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Create a task.
@@ -510,53 +557,6 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async patchTaskInternalNote(requestParameters: PatchTaskInternalNoteRequest): Promise<InternalNotesPatchNoteResponse> {
         const response = await this.patchTaskInternalNoteRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Soft delete an internal note for a task.
-     */
-    async softDeleteTaskInternalNoteRaw(requestParameters: SoftDeleteTaskInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
-            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling softDeleteTaskInternalNote.');
-        }
-
-        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
-            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling softDeleteTaskInternalNote.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
-            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
-            } else {
-                headerParameters["Authorization"] = this.configuration.accessToken;
-            }
-        }
-
-        const response = await this.request({
-            path: `/crm/api/v1/tasks/{taskId}/notes/{noteId}/softDelete`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * Soft delete an internal note for a task.
-     */
-    async softDeleteTaskInternalNote(requestParameters: SoftDeleteTaskInternalNoteRequest): Promise<object> {
-        const response = await this.softDeleteTaskInternalNoteRaw(requestParameters);
         return await response.value();
     }
 
