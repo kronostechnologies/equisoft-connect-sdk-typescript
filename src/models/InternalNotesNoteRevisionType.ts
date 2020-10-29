@@ -18,7 +18,8 @@
 export enum InternalNotesNoteRevisionType {
     CREATE = 'CREATE',
     MODIFY = 'MODIFY',
-    ARCHIVE = 'ARCHIVE'
+    ARCHIVE = 'ARCHIVE',
+    RESTORE = 'RESTORE'
 }
 
 export function InternalNotesNoteRevisionTypeFromJSON(json: any): InternalNotesNoteRevisionType {

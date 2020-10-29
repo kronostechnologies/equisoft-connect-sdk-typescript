@@ -100,6 +100,12 @@ export interface PatchTaskInternalNoteRequest {
     acceptLanguage?: string;
 }
 
+export interface RestoreTaskInternalNoteRequest {
+    taskId: string;
+    noteId: number;
+    acceptLanguage?: string;
+}
+
 export interface TransferTaskToCompletedRequest {
     taskId: string;
 }
@@ -557,6 +563,53 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async patchTaskInternalNote(requestParameters: PatchTaskInternalNoteRequest): Promise<InternalNotesPatchNoteResponse> {
         const response = await this.patchTaskInternalNoteRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Restore an archived internal note for a task.
+     */
+    async restoreTaskInternalNoteRaw(requestParameters: RestoreTaskInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling restoreTaskInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling restoreTaskInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:task"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/tasks/{taskId}/notes/{noteId}/restore`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Restore an archived internal note for a task.
+     */
+    async restoreTaskInternalNote(requestParameters: RestoreTaskInternalNoteRequest): Promise<object> {
+        const response = await this.restoreTaskInternalNoteRaw(requestParameters);
         return await response.value();
     }
 

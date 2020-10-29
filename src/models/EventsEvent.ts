@@ -158,6 +158,18 @@ export interface EventsEvent {
      */
     calendarId: number;
     /**
+     * hex color of this event background
+     * @type {string}
+     * @memberof EventsEvent
+     */
+    color?: string;
+    /**
+     * hex text color of this event
+     * @type {string}
+     * @memberof EventsEvent
+     */
+    textColor?: string;
+    /**
      * IDs of the contacts linked to this Event
      * @type {Array<number>}
      * @memberof EventsEvent
@@ -202,6 +214,8 @@ export function EventsEventFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'creationTime': !exists(json, 'creationTime') ? undefined : (new Date(json['creationTime'])),
         'updateTime': !exists(json, 'updateTime') ? undefined : (new Date(json['updateTime'])),
         'calendarId': json['calendarId'],
+        'color': !exists(json, 'color') ? undefined : json['color'],
+        'textColor': !exists(json, 'textColor') ? undefined : json['textColor'],
         'contactIds': !exists(json, 'contactIds') ? undefined : json['contactIds'],
         'accessRights': AccessRightsFromJSON(json['accessRights']),
     };
@@ -237,6 +251,8 @@ export function EventsEventToJSON(value?: EventsEvent | null): any {
         'creationTime': value.creationTime === undefined ? undefined : (value.creationTime.toISOString()),
         'updateTime': value.updateTime === undefined ? undefined : (value.updateTime.toISOString()),
         'calendarId': value.calendarId,
+        'color': value.color,
+        'textColor': value.textColor,
         'contactIds': value.contactIds,
         'accessRights': AccessRightsToJSON(value.accessRights),
     };

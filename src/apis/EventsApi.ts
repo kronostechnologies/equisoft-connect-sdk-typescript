@@ -124,6 +124,12 @@ export interface PatchEventInternalNoteRequest {
     acceptLanguage?: string;
 }
 
+export interface RestoreEventInternalNoteRequest {
+    eventId: string;
+    noteId: number;
+    acceptLanguage?: string;
+}
+
 export interface TransferEventToCompletedRequest {
     eventId: string;
 }
@@ -730,6 +736,53 @@ export class EventsApi extends runtime.BaseAPI {
      */
     async patchEventInternalNote(requestParameters: PatchEventInternalNoteRequest): Promise<InternalNotesPatchNoteResponse> {
         const response = await this.patchEventInternalNoteRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Restore an archived internal note for an event.
+     */
+    async restoreEventInternalNoteRaw(requestParameters: RestoreEventInternalNoteRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling restoreEventInternalNote.');
+        }
+
+        if (requestParameters.noteId === null || requestParameters.noteId === undefined) {
+            throw new runtime.RequiredError('noteId','Required parameter requestParameters.noteId was null or undefined when calling restoreEventInternalNote.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:event"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/events/{eventId}/notes/{noteId}/restore`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))).replace(`{${"noteId"}}`, encodeURIComponent(String(requestParameters.noteId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Restore an archived internal note for an event.
+     */
+    async restoreEventInternalNote(requestParameters: RestoreEventInternalNoteRequest): Promise<object> {
+        const response = await this.restoreEventInternalNoteRaw(requestParameters);
         return await response.value();
     }
 
