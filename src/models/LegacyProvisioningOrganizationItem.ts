@@ -44,10 +44,10 @@ export interface LegacyProvisioningOrganizationItem {
     status?: string;
     /**
      * Organization disk usage quota. Deprecated. Always empty.
-     * @type {number}
+     * @type {string}
      * @memberof LegacyProvisioningOrganizationItem
      */
-    diskUsageQuota?: number;
+    diskUsageQuota?: string;
     /**
      * Default language
      * @type {string}

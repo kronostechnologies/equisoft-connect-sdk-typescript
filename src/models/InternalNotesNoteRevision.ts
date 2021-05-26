@@ -22,25 +22,25 @@ export interface InternalNotesNoteRevision {
      * @type {number}
      * @memberof InternalNotesNoteRevision
      */
-    id: number;
+    id: number | null;
     /**
      * 
      * @type {string}
      * @memberof InternalNotesNoteRevision
      */
-    type?: string;
+    type?: string | null;
     /**
      * Note content
      * @type {string}
      * @memberof InternalNotesNoteRevision
      */
-    content: string;
+    content: string | null;
     /**
      * 
      * @type {Date}
      * @memberof InternalNotesNoteRevision
      */
-    createdAt: Date;
+    createdAt: Date | null;
 }
 
 export function InternalNotesNoteRevisionFromJSON(json: any): InternalNotesNoteRevision {
@@ -56,7 +56,7 @@ export function InternalNotesNoteRevisionFromJSONTyped(json: any, _ignoreDiscrim
         'id': json['id'],
         'type': !exists(json, 'type') ? undefined : json['type'],
         'content': json['content'],
-        'createdAt': (new Date(json['createdAt'])),
+        'createdAt': (json['createdAt'] === null ? null : new Date(json['createdAt'])),
     };
 }
 
@@ -72,7 +72,7 @@ export function InternalNotesNoteRevisionToJSON(value?: InternalNotesNoteRevisio
         'id': value.id,
         'type': value.type,
         'content': value.content,
-        'createdAt': (value.createdAt.toISOString()),
+        'createdAt': (value.createdAt === null ? null : value.createdAt.toISOString()),
     };
 }
 

@@ -18,17 +18,23 @@ import { exists } from '../runtime';
  */
 export interface GatewaysCredentials {
     /**
-     * 
+     * | null
      * @type {string}
      * @memberof GatewaysCredentials
      */
     username: string;
     /**
-     * 
+     * | null
      * @type {string}
      * @memberof GatewaysCredentials
      */
     password: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewaysCredentials
+     */
+    repcode?: string;
     /**
      * 
      * @type {boolean}
@@ -49,6 +55,7 @@ export function GatewaysCredentialsFromJSONTyped(json: any, _ignoreDiscriminator
         
         'username': json['username'],
         'password': json['password'],
+        'repcode': !exists(json, 'repcode') ? undefined : json['repcode'],
         'isADealerCode': !exists(json, 'isADealerCode') ? undefined : json['isADealerCode'],
     };
 }
@@ -64,6 +71,7 @@ export function GatewaysCredentialsToJSON(value?: GatewaysCredentials | null): a
         
         'username': value.username,
         'password': value.password,
+        'repcode': value.repcode,
         'isADealerCode': value.isADealerCode,
     };
 }

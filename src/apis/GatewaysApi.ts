@@ -13,6 +13,12 @@
 
 import * as runtime from '../runtime';
 import {
+    AdminCredentialPayload,
+    AdminCredentialPayloadToJSON,
+    AdminCredentialResponse,
+    AdminCredentialResponseFromJSON,
+    CredentialsResponse,
+    CredentialsResponseFromJSON,
     GatewaysAccessesCreateAccessResponse,
     GatewaysAccessesCreateAccessResponseFromJSON,
     GatewaysAccessesCreateEquisoftAnalyzeAccessPayload,
@@ -33,8 +39,24 @@ export interface DeleteEquisoftAnalyzeAccessRequest {
     accessId: number;
 }
 
+export interface GatewayAdminLoginRequest {
+    gatewayName: string;
+    authorization: string;
+    adminCredentialPayload: AdminCredentialPayload;
+}
+
+export interface ListCredentialsRequest {
+    gatewayId: string;
+    status: string;
+    authorization: string;
+}
+
 export interface ListEquisoftAnalyzeAccessesRequest {
     userUuid?: string;
+}
+
+export interface ListGatewayConfigurationsRequest {
+    gatewayName: string;
 }
 
 export interface ListGenericCredentialsRequest {
@@ -45,6 +67,13 @@ export interface ListGenericCredentialsRequest {
 export interface PatchEquisoftAnalyzeAccessRequest {
     accessId: number;
     gatewaysAccessesPatchEquisoftAnalyzeAccessPayload: GatewaysAccessesPatchEquisoftAnalyzeAccessPayload;
+}
+
+export interface UpdateCredentialsRequest {
+    gatewayId: string;
+    status: string;
+    authorization: string;
+    credentialIds?: Array<number>;
 }
 
 /**
@@ -134,6 +163,140 @@ export class GatewaysApi extends runtime.BaseAPI {
     }
 
     /**
+     */
+    async gatewayAdminLoginRaw(requestParameters: GatewayAdminLoginRequest): Promise<runtime.ApiResponse<AdminCredentialResponse>> {
+        if (requestParameters.gatewayName === null || requestParameters.gatewayName === undefined) {
+            throw new runtime.RequiredError('gatewayName','Required parameter requestParameters.gatewayName was null or undefined when calling gatewayAdminLogin.');
+        }
+
+        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
+            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling gatewayAdminLogin.');
+        }
+
+        if (requestParameters.adminCredentialPayload === null || requestParameters.adminCredentialPayload === undefined) {
+            throw new runtime.RequiredError('adminCredentialPayload','Required parameter requestParameters.adminCredentialPayload was null or undefined when calling gatewayAdminLogin.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
+            headerParameters['Authorization'] = String(requestParameters.authorization);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:authentication"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/gateways/credentials-validation/{gatewayName}/admin-credentials/login`.replace(`{${"gatewayName"}}`, encodeURIComponent(String(requestParameters.gatewayName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AdminCredentialPayloadToJSON(requestParameters.adminCredentialPayload),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AdminCredentialResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async gatewayAdminLogin(requestParameters: GatewayAdminLoginRequest): Promise<AdminCredentialResponse> {
+        const response = await this.gatewayAdminLoginRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async listAssetBookCredentialsRaw(): Promise<runtime.ApiResponse<GatewaysListCredentialsResponse>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/gateways/assetbook/credentials`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GatewaysListCredentialsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async listAssetBookCredentials(): Promise<GatewaysListCredentialsResponse> {
+        const response = await this.listAssetBookCredentialsRaw();
+        return await response.value();
+    }
+
+    /**
+     */
+    async listCredentialsRaw(requestParameters: ListCredentialsRequest): Promise<runtime.ApiResponse<CredentialsResponse>> {
+        if (requestParameters.gatewayId === null || requestParameters.gatewayId === undefined) {
+            throw new runtime.RequiredError('gatewayId','Required parameter requestParameters.gatewayId was null or undefined when calling listCredentials.');
+        }
+
+        if (requestParameters.status === null || requestParameters.status === undefined) {
+            throw new runtime.RequiredError('status','Required parameter requestParameters.status was null or undefined when calling listCredentials.');
+        }
+
+        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
+            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling listCredentials.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
+            headerParameters['Authorization'] = String(requestParameters.authorization);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:validation"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/gateways/credentials-validation/{gatewayId}/credentials/{status}`.replace(`{${"gatewayId"}}`, encodeURIComponent(String(requestParameters.gatewayId))).replace(`{${"status"}}`, encodeURIComponent(String(requestParameters.status))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CredentialsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async listCredentials(requestParameters: ListCredentialsRequest): Promise<CredentialsResponse> {
+        const response = await this.listCredentialsRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * List user accesses configuration for equisoft/analyze gateway
      */
     async listEquisoftAnalyzeAccessesRaw(requestParameters: ListEquisoftAnalyzeAccessesRequest): Promise<runtime.ApiResponse<GatewaysAccessesListGatewayAccessesResponse>> {
@@ -174,6 +337,42 @@ export class GatewaysApi extends runtime.BaseAPI {
 
     /**
      */
+    async listGatewayConfigurationsRaw(requestParameters: ListGatewayConfigurationsRequest): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.gatewayName === null || requestParameters.gatewayName === undefined) {
+            throw new runtime.RequiredError('gatewayName','Required parameter requestParameters.gatewayName was null or undefined when calling listGatewayConfigurations.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/gateways/generic/{gatewayName}/configuration`.replace(`{${"gatewayName"}}`, encodeURIComponent(String(requestParameters.gatewayName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async listGatewayConfigurations(requestParameters: ListGatewayConfigurationsRequest): Promise<void> {
+        await this.listGatewayConfigurationsRaw(requestParameters);
+    }
+
+    /**
+     */
     async listGenericCredentialsRaw(requestParameters: ListGenericCredentialsRequest): Promise<runtime.ApiResponse<GatewaysListCredentialsResponse>> {
         if (requestParameters.gatewayName === null || requestParameters.gatewayName === undefined) {
             throw new runtime.RequiredError('gatewayName','Required parameter requestParameters.gatewayName was null or undefined when calling listGenericCredentials.');
@@ -190,7 +389,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:datagateway"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -256,6 +455,59 @@ export class GatewaysApi extends runtime.BaseAPI {
      */
     async patchEquisoftAnalyzeAccess(requestParameters: PatchEquisoftAnalyzeAccessRequest): Promise<object> {
         const response = await this.patchEquisoftAnalyzeAccessRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async updateCredentialsRaw(requestParameters: UpdateCredentialsRequest): Promise<runtime.ApiResponse<CredentialsResponse>> {
+        if (requestParameters.gatewayId === null || requestParameters.gatewayId === undefined) {
+            throw new runtime.RequiredError('gatewayId','Required parameter requestParameters.gatewayId was null or undefined when calling updateCredentials.');
+        }
+
+        if (requestParameters.status === null || requestParameters.status === undefined) {
+            throw new runtime.RequiredError('status','Required parameter requestParameters.status was null or undefined when calling updateCredentials.');
+        }
+
+        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
+            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling updateCredentials.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.credentialIds) {
+            queryParameters['credentialIds'] = requestParameters.credentialIds;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
+            headerParameters['Authorization'] = String(requestParameters.authorization);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:validation"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/gateways/credentials-validation/{gatewayId}/credentials/{status}`.replace(`{${"gatewayId"}}`, encodeURIComponent(String(requestParameters.gatewayId))).replace(`{${"status"}}`, encodeURIComponent(String(requestParameters.status))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CredentialsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async updateCredentials(requestParameters: UpdateCredentialsRequest): Promise<CredentialsResponse> {
+        const response = await this.updateCredentialsRaw(requestParameters);
         return await response.value();
     }
 

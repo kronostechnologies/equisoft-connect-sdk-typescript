@@ -13,6 +13,8 @@
 
 import * as runtime from '../runtime';
 import {
+    ContextUserContext,
+    ContextUserContextFromJSON,
     UsersUser,
     UsersUserFromJSON,
 } from '../models';
@@ -62,6 +64,41 @@ export class UsersApi extends runtime.BaseAPI {
      */
     async getCurrentUser(requestParameters: GetCurrentUserRequest): Promise<UsersUser> {
         const response = await this.getCurrentUserRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Get user context metadata.
+     */
+    async getUserContextRaw(): Promise<runtime.ApiResponse<ContextUserContext>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            if (typeof this.configuration.accessToken === 'function') {
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["profile"]);
+            } else {
+                headerParameters["Authorization"] = this.configuration.accessToken;
+            }
+        }
+
+        const response = await this.request({
+            path: `/crm/api/v1/context`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContextUserContextFromJSON(jsonValue));
+    }
+
+    /**
+     * Get user context metadata.
+     */
+    async getUserContext(): Promise<ContextUserContext> {
+        const response = await this.getUserContextRaw();
         return await response.value();
     }
 

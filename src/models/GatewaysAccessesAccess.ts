@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { exists } from '../runtime';
 import {
     GatewaysAccessesUser,
     GatewaysAccessesUserFromJSON,
@@ -27,12 +26,6 @@ import {
  * @interface GatewaysAccessesAccess
  */
 export interface GatewaysAccessesAccess {
-    /**
-     * 
-     * @type {string}
-     * @memberof GatewaysAccessesAccess
-     */
-    type?: GatewaysAccessesAccessTypeEnum;
     /**
      * 
      * @type {number}
@@ -62,7 +55,6 @@ export function GatewaysAccessesAccessFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'type': !exists(json, 'type') ? undefined : json['type'],
         'id': json['id'],
         'users': ((json['users'] as Array<any>).map(GatewaysAccessesUserFromJSON)),
     };
@@ -77,18 +69,9 @@ export function GatewaysAccessesAccessToJSON(value?: GatewaysAccessesAccess | nu
     }
     return {
         
-        'type': value.type,
         'id': value.id,
         'users': ((value.users as Array<any>).map(GatewaysAccessesUserToJSON)),
     };
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum GatewaysAccessesAccessTypeEnum {
-    EQUISOFT_ANALYZE = 'EQUISOFT_ANALYZE'
 }
 
 

@@ -19,17 +19,23 @@ import { exists } from '../runtime';
  */
 export interface GatewaysCredentialsWithSsn {
     /**
-     * 
+     * | null
      * @type {string}
      * @memberof GatewaysCredentialsWithSsn
      */
     username: string;
     /**
-     * 
+     * | null
      * @type {string}
      * @memberof GatewaysCredentialsWithSsn
      */
     password: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewaysCredentialsWithSsn
+     */
+    repcode?: string;
     /**
      * 
      * @type {boolean}
@@ -56,6 +62,7 @@ export function GatewaysCredentialsWithSsnFromJSONTyped(json: any, _ignoreDiscri
         
         'username': json['username'],
         'password': json['password'],
+        'repcode': !exists(json, 'repcode') ? undefined : json['repcode'],
         'isADealerCode': !exists(json, 'isADealerCode') ? undefined : json['isADealerCode'],
         'ssnList': !exists(json, 'ssnList') ? undefined : json['ssnList'],
     };
@@ -72,6 +79,7 @@ export function GatewaysCredentialsWithSsnToJSON(value?: GatewaysCredentialsWith
         
         'username': value.username,
         'password': value.password,
+        'repcode': value.repcode,
         'isADealerCode': value.isADealerCode,
         'ssnList': value.ssnList,
     };

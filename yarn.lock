@@ -3,7 +3,7 @@
 
 __metadata:
   version: 4
-  cacheKey: 6
+  cacheKey: 7
 
 "@babel/code-frame@npm:^7.0.0":
   version: 7.10.4
@@ -360,11 +360,11 @@ typescript@^3.6:
 
 "typescript@patch:typescript@^3.6#builtin<compat/typescript>":
   version: 3.9.6
-  resolution: "typescript@patch:typescript@npm%3A3.9.6#builtin<compat/typescript>::version=3.9.6&hash=5b02a2"
+  resolution: "typescript@patch:typescript@npm%3A3.9.6#builtin<compat/typescript>::version=3.9.6&hash=a45b0e"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: de0b64b2df571ddb6a87e058605b011b1d7e2ed5e1bb27ba658251a380041abbbdf5bdf8da25d5605ac84e7fb3882a816b9a283ffaddedebfde1a57db4c18c30
+  checksum: 3192275f00f6331482149cfc9a6d5329411d8da23a7616af836fa4deb6814ba0d67a048e26c67bd41d3b2ebc89a348778f7a8747a59b79a3f5c32448c62b781b
   languageName: node
   linkType: hard
 

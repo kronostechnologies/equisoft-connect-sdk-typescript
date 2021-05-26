@@ -34,31 +34,31 @@ export interface InternalNotesNote {
      * @type {number}
      * @memberof InternalNotesNote
      */
-    id: number;
+    id: number | null;
     /**
      * 
-     * @type {InternalNotesAuthor}
+     * @type {Array<InternalNotesAuthor>}
      * @memberof InternalNotesNote
      */
-    author: InternalNotesAuthor;
+    author: Array<InternalNotesAuthor> | null;
     /**
      * 
      * @type {Date}
      * @memberof InternalNotesNote
      */
-    firstRevisionCreatedAt: Date;
+    firstRevisionCreatedAt: Date | null;
     /**
      * 
-     * @type {AccessRights}
+     * @type {Array<AccessRights>}
      * @memberof InternalNotesNote
      */
-    accessRights: AccessRights;
+    accessRights: Array<AccessRights> | null;
     /**
      * 
-     * @type {InternalNotesNoteRevision}
+     * @type {Array<InternalNotesNoteRevision>}
      * @memberof InternalNotesNote
      */
-    currentRevision: InternalNotesNoteRevision;
+    currentRevision: Array<InternalNotesNoteRevision> | null;
     /**
      * 
      * @type {Array<InternalNotesNoteRevision>}
@@ -78,10 +78,10 @@ export function InternalNotesNoteFromJSONTyped(json: any, _ignoreDiscriminator: 
     return {
         
         'id': json['id'],
-        'author': InternalNotesAuthorFromJSON(json['author']),
-        'firstRevisionCreatedAt': (new Date(json['firstRevisionCreatedAt'])),
-        'accessRights': AccessRightsFromJSON(json['accessRights']),
-        'currentRevision': InternalNotesNoteRevisionFromJSON(json['currentRevision']),
+        'author': (json['author'] === null ? null : (json['author'] as Array<any>).map(InternalNotesAuthorFromJSON)),
+        'firstRevisionCreatedAt': (json['firstRevisionCreatedAt'] === null ? null : new Date(json['firstRevisionCreatedAt'])),
+        'accessRights': (json['accessRights'] === null ? null : (json['accessRights'] as Array<any>).map(AccessRightsFromJSON)),
+        'currentRevision': (json['currentRevision'] === null ? null : (json['currentRevision'] as Array<any>).map(InternalNotesNoteRevisionFromJSON)),
         'previousRevisions': !exists(json, 'previousRevisions') ? undefined : (json['previousRevisions'] === null ? null : (json['previousRevisions'] as Array<any>).map(InternalNotesNoteRevisionFromJSON)),
     };
 }
@@ -96,10 +96,10 @@ export function InternalNotesNoteToJSON(value?: InternalNotesNote | null): any {
     return {
         
         'id': value.id,
-        'author': InternalNotesAuthorToJSON(value.author),
-        'firstRevisionCreatedAt': (value.firstRevisionCreatedAt.toISOString()),
-        'accessRights': AccessRightsToJSON(value.accessRights),
-        'currentRevision': InternalNotesNoteRevisionToJSON(value.currentRevision),
+        'author': (value.author === null ? null : (value.author as Array<any>).map(InternalNotesAuthorToJSON)),
+        'firstRevisionCreatedAt': (value.firstRevisionCreatedAt === null ? null : value.firstRevisionCreatedAt.toISOString()),
+        'accessRights': (value.accessRights === null ? null : (value.accessRights as Array<any>).map(AccessRightsToJSON)),
+        'currentRevision': (value.currentRevision === null ? null : (value.currentRevision as Array<any>).map(InternalNotesNoteRevisionToJSON)),
         'previousRevisions': value.previousRevisions === undefined ? undefined : (value.previousRevisions === null ? null : (value.previousRevisions as Array<any>).map(InternalNotesNoteRevisionToJSON)),
     };
 }

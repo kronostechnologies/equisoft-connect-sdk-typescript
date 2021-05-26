@@ -10,50 +10,49 @@
  * Do not edit the class manually.
  */
 
-import { exists } from '../runtime';
 /**
  * 
  * @export
- * @interface InternalNotesAuthor
+ * @interface ContextUser
  */
-export interface InternalNotesAuthor {
+export interface ContextUser {
     /**
-     * Unique numerical identifier.
-     * @type {number}
-     * @memberof InternalNotesAuthor
-     */
-    id?: number | null;
-    /**
-     * Globally unique identifier.
+     * environment name
      * @type {string}
-     * @memberof InternalNotesAuthor
+     * @memberof ContextUser
      */
-    uuid: string | null;
+    uuid: string;
     /**
-     * Author name
+     * environment name
      * @type {string}
-     * @memberof InternalNotesAuthor
+     * @memberof ContextUser
      */
-    displayName: string | null;
+    displayName: string;
+    /**
+     * environment name
+     * @type {string}
+     * @memberof ContextUser
+     */
+    email: string;
 }
 
-export function InternalNotesAuthorFromJSON(json: any): InternalNotesAuthor {
-    return InternalNotesAuthorFromJSONTyped(json, false);
+export function ContextUserFromJSON(json: any): ContextUser {
+    return ContextUserFromJSONTyped(json, false);
 }
 
-export function InternalNotesAuthorFromJSONTyped(json: any, _ignoreDiscriminator: boolean): InternalNotesAuthor {
+export function ContextUserFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ContextUser {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'uuid': json['uuid'],
         'displayName': json['displayName'],
+        'email': json['email'],
     };
 }
 
-export function InternalNotesAuthorToJSON(value?: InternalNotesAuthor | null): any {
+export function ContextUserToJSON(value?: ContextUser | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -62,9 +61,9 @@ export function InternalNotesAuthorToJSON(value?: InternalNotesAuthor | null): a
     }
     return {
         
-        'id': value.id,
         'uuid': value.uuid,
         'displayName': value.displayName,
+        'email': value.email,
     };
 }
 
