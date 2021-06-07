@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyAddUpdateItem,
+    LegacyAddUpdateItemFromJSON,
+    LegacyAddUpdateItemToJSON,
 } from './';
 
 /**
@@ -60,7 +62,7 @@ export function LegacyAddUpdateResponseFromJSONTyped(json: any, _ignoreDiscrimin
         'stat': !exists(json, 'stat') ? undefined : json['stat'],
         'errorCode': !exists(json, 'error_code') ? undefined : json['error_code'],
         'errorMsg': !exists(json, 'error_msg') ? undefined : json['error_msg'],
-        'items': Array&lt;LegacyAddUpdateItem&gt;FromJSON(json['items']),
+        'items': ((json['items'] as Array<any>).map(LegacyAddUpdateItemFromJSON)),
     };
 }
 
@@ -76,7 +78,7 @@ export function LegacyAddUpdateResponseToJSON(value?: LegacyAddUpdateResponse | 
         'stat': value.stat,
         'error_code': value.errorCode,
         'error_msg': value.errorMsg,
-        'items': Array&lt;LegacyAddUpdateItem&gt;ToJSON(value.items),
+        'items': ((value.items as Array<any>).map(LegacyAddUpdateItemToJSON)),
     };
 }
 

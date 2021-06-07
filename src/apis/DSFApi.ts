@@ -55,7 +55,7 @@ export class DSFApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:database"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -93,7 +93,7 @@ export class DSFApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:database"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -125,7 +125,7 @@ export class DSFApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:database"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -168,7 +168,7 @@ export class DSFApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:database"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }

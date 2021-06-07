@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     EventsEvent,
+    EventsEventFromJSON,
+    EventsEventToJSON,
 } from './';
 
 /**
@@ -46,7 +48,7 @@ export function EventsGetEventInstancesResponseFromJSONTyped(json: any, _ignoreD
     return {
         
         'nextPageToken': !exists(json, 'nextPageToken') ? undefined : json['nextPageToken'],
-        'items': Array&lt;EventsEvent&gt;FromJSON(json['items']),
+        'items': ((json['items'] as Array<any>).map(EventsEventFromJSON)),
     };
 }
 
@@ -60,7 +62,7 @@ export function EventsGetEventInstancesResponseToJSON(value?: EventsGetEventInst
     return {
         
         'nextPageToken': value.nextPageToken,
-        'items': Array&lt;EventsEvent&gt;ToJSON(value.items),
+        'items': ((value.items as Array<any>).map(EventsEventToJSON)),
     };
 }
 

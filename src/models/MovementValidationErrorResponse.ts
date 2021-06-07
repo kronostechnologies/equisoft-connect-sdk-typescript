@@ -10,9 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { exists } from '../runtime';
+import { exists, mapValues } from '../runtime';
 import {
     MovementValidationError,
+    MovementValidationErrorFromJSON,
+    MovementValidationErrorToJSON,
 } from './';
 
 /**
@@ -39,7 +41,7 @@ export function MovementValidationErrorResponseFromJSONTyped(json: any, _ignoreD
     }
     return {
         
-        'errors': !exists(json, 'errors') ? undefined : { [key: string]: MovementValidationError; }FromJSON(json['errors']),
+        'errors': !exists(json, 'errors') ? undefined : (mapValues(json['errors'], MovementValidationErrorFromJSON)),
     };
 }
 
@@ -52,7 +54,7 @@ export function MovementValidationErrorResponseToJSON(value?: MovementValidation
     }
     return {
         
-        'errors': { [key: string]: MovementValidationError; }ToJSON(value.errors),
+        'errors': value.errors === undefined ? undefined : (mapValues(value.errors, MovementValidationErrorToJSON)),
     };
 }
 

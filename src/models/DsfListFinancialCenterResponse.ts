@@ -12,6 +12,8 @@
 
 import {
     DsfFinancialCenter,
+    DsfFinancialCenterFromJSON,
+    DsfFinancialCenterToJSON,
 } from './';
 
 /**
@@ -38,7 +40,7 @@ export function DsfListFinancialCenterResponseFromJSONTyped(json: any, _ignoreDi
     }
     return {
         
-        'items': Array&lt;DsfFinancialCenter&gt;FromJSON(json['items']),
+        'items': ((json['items'] as Array<any>).map(DsfFinancialCenterFromJSON)),
     };
 }
 
@@ -51,7 +53,7 @@ export function DsfListFinancialCenterResponseToJSON(value?: DsfListFinancialCen
     }
     return {
         
-        'items': Array&lt;DsfFinancialCenter&gt;ToJSON(value.items),
+        'items': ((value.items as Array<any>).map(DsfFinancialCenterToJSON)),
     };
 }
 

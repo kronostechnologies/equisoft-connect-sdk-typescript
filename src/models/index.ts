@@ -135,6 +135,7 @@ export * from './MovementValidationErrorResponse';
 export * from './MxRecipient';
 export * from './MxRecipientsPayload';
 export * from './MxValidateRecipientsResponse';
+export * from './RemoteaccountAccountSyncPayload';
 export * from './RemoteaccountAccountSyncResponse';
 export * from './RemoteaccountSyncStatus';
 export * from './RemoteaccountSyncTaskStatus';

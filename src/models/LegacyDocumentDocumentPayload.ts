@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyDocumentDocumentPayloadItem,
+    LegacyDocumentDocumentPayloadItemFromJSON,
+    LegacyDocumentDocumentPayloadItemToJSON,
 } from './';
 
 /**
@@ -39,7 +41,7 @@ export function LegacyDocumentDocumentPayloadFromJSONTyped(json: any, _ignoreDis
     }
     return {
         
-        'documents': !exists(json, 'documents') ? undefined : Array&lt;LegacyDocumentDocumentPayloadItem&gt;FromJSON(json['documents']),
+        'documents': !exists(json, 'documents') ? undefined : ((json['documents'] as Array<any>).map(LegacyDocumentDocumentPayloadItemFromJSON)),
     };
 }
 
@@ -52,7 +54,7 @@ export function LegacyDocumentDocumentPayloadToJSON(value?: LegacyDocumentDocume
     }
     return {
         
-        'documents': Array&lt;LegacyDocumentDocumentPayloadItem&gt;ToJSON(value.documents),
+        'documents': value.documents === undefined ? undefined : ((value.documents as Array<any>).map(LegacyDocumentDocumentPayloadItemToJSON)),
     };
 }
 

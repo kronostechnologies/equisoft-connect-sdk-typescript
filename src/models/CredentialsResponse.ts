@@ -12,6 +12,8 @@
 
 import {
     CredentialDto,
+    CredentialDtoFromJSON,
+    CredentialDtoToJSON,
 } from './';
 
 /**
@@ -38,7 +40,7 @@ export function CredentialsResponseFromJSONTyped(json: any, _ignoreDiscriminator
     }
     return {
         
-        'credentials': Array&lt;CredentialDto&gt;FromJSON(json['credentials']),
+        'credentials': ((json['credentials'] as Array<any>).map(CredentialDtoFromJSON)),
     };
 }
 
@@ -51,7 +53,7 @@ export function CredentialsResponseToJSON(value?: CredentialsResponse | null): a
     }
     return {
         
-        'credentials': Array&lt;CredentialDto&gt;ToJSON(value.credentials),
+        'credentials': ((value.credentials as Array<any>).map(CredentialDtoToJSON)),
     };
 }
 

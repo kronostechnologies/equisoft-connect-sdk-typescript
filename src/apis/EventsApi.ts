@@ -175,6 +175,7 @@ export class EventsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -310,6 +311,7 @@ export class EventsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -566,7 +568,7 @@ export class EventsApi extends runtime.BaseAPI {
             queryParameters['ownerId'] = requestParameters.ownerId;
         }
 
-        if (requestParameters.contactIds !== undefined) {
+        if (requestParameters.contactIds) {
             queryParameters['contactIds'] = requestParameters.contactIds;
         }
 
@@ -773,6 +775,7 @@ export class EventsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**

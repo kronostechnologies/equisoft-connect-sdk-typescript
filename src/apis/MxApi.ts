@@ -45,7 +45,7 @@ export class MxApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["profile"]);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }

@@ -16,6 +16,8 @@ import {
     InternalNotesLegacyNoteFromJSON,
     InternalNotesLegacyNoteToJSON,
     InternalNotesNote,
+    InternalNotesNoteFromJSON,
+    InternalNotesNoteToJSON,
 } from './';
 
 /**
@@ -48,7 +50,7 @@ export function InternalNotesNoteListFromJSONTyped(json: any, _ignoreDiscriminat
     }
     return {
         
-        'notes': Array&lt;InternalNotesNote&gt;FromJSON(json['notes']),
+        'notes': ((json['notes'] as Array<any>).map(InternalNotesNoteFromJSON)),
         'legacyNote': !exists(json, 'legacyNote') ? undefined : InternalNotesLegacyNoteFromJSON(json['legacyNote']),
     };
 }
@@ -62,7 +64,7 @@ export function InternalNotesNoteListToJSON(value?: InternalNotesNoteList | null
     }
     return {
         
-        'notes': Array&lt;InternalNotesNote&gt;ToJSON(value.notes),
+        'notes': ((value.notes as Array<any>).map(InternalNotesNoteToJSON)),
         'legacyNote': InternalNotesLegacyNoteToJSON(value.legacyNote),
     };
 }

@@ -153,6 +153,7 @@ src/models/MovementValidationErrorResponse.ts
 src/models/MxRecipient.ts
 src/models/MxRecipientsPayload.ts
 src/models/MxValidateRecipientsResponse.ts
+src/models/RemoteaccountAccountSyncPayload.ts
 src/models/RemoteaccountAccountSyncResponse.ts
 src/models/RemoteaccountSyncStatus.ts
 src/models/RemoteaccountSyncTaskStatus.ts

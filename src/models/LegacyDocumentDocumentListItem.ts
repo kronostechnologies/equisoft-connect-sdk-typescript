@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyDocumentFile,
+    LegacyDocumentFileFromJSON,
+    LegacyDocumentFileToJSON,
 } from './';
 
 /**
@@ -64,7 +66,7 @@ export function LegacyDocumentDocumentListItemFromJSONTyped(json: any, _ignoreDi
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'files': !exists(json, 'files') ? undefined : Array&lt;LegacyDocumentFile&gt;FromJSON(json['files']),
+        'files': !exists(json, 'files') ? undefined : ((json['files'] as Array<any>).map(LegacyDocumentFileFromJSON)),
         'type': !exists(json, 'type') ? undefined : json['type'],
         'subType': !exists(json, 'subType') ? undefined : json['subType'],
         'name': !exists(json, 'name') ? undefined : json['name'],
@@ -81,7 +83,7 @@ export function LegacyDocumentDocumentListItemToJSON(value?: LegacyDocumentDocum
     return {
         
         'id': value.id,
-        'files': Array&lt;LegacyDocumentFile&gt;ToJSON(value.files),
+        'files': value.files === undefined ? undefined : ((value.files as Array<any>).map(LegacyDocumentFileToJSON)),
         'type': value.type,
         'subType': value.subType,
         'name': value.name,

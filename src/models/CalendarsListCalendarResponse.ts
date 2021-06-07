@@ -12,6 +12,8 @@
 
 import {
     CalendarsCalendar,
+    CalendarsCalendarFromJSON,
+    CalendarsCalendarToJSON,
 } from './';
 
 /**
@@ -38,7 +40,7 @@ export function CalendarsListCalendarResponseFromJSONTyped(json: any, _ignoreDis
     }
     return {
         
-        'items': Array&lt;CalendarsCalendar&gt;FromJSON(json['items']),
+        'items': ((json['items'] as Array<any>).map(CalendarsCalendarFromJSON)),
     };
 }
 
@@ -51,7 +53,7 @@ export function CalendarsListCalendarResponseToJSON(value?: CalendarsListCalenda
     }
     return {
         
-        'items': Array&lt;CalendarsCalendar&gt;ToJSON(value.items),
+        'items': ((value.items as Array<any>).map(CalendarsCalendarToJSON)),
     };
 }
 

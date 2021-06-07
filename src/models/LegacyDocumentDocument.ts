@@ -13,8 +13,14 @@
 import { exists } from '../runtime';
 import {
     LegacyContactContact,
+    LegacyContactContactFromJSON,
+    LegacyContactContactToJSON,
     LegacyDocumentFile,
+    LegacyDocumentFileFromJSON,
+    LegacyDocumentFileToJSON,
     LegacyUser,
+    LegacyUserFromJSON,
+    LegacyUserToJSON,
 } from './';
 
 /**
@@ -137,8 +143,8 @@ export function LegacyDocumentDocumentFromJSONTyped(json: any, _ignoreDiscrimina
     }
     return {
         
-        'files': !exists(json, 'files') ? undefined : Array&lt;LegacyDocumentFile&gt;FromJSON(json['files']),
-        'contacts': !exists(json, 'contacts') ? undefined : Array&lt;LegacyContactContact&gt;FromJSON(json['contacts']),
+        'files': !exists(json, 'files') ? undefined : ((json['files'] as Array<any>).map(LegacyDocumentFileFromJSON)),
+        'contacts': !exists(json, 'contacts') ? undefined : ((json['contacts'] as Array<any>).map(LegacyContactContactFromJSON)),
         'createdBy': !exists(json, 'createdBy') ? undefined : json['createdBy'],
         'createdOn': !exists(json, 'createdOn') ? undefined : json['createdOn'],
         'modifiedBy': !exists(json, 'modifiedBy') ? undefined : json['modifiedBy'],
@@ -149,7 +155,7 @@ export function LegacyDocumentDocumentFromJSONTyped(json: any, _ignoreDiscrimina
         'dateSignature': !exists(json, 'dateSignature') ? undefined : json['dateSignature'],
         'writtenBy': !exists(json, 'writtenBy') ? undefined : json['writtenBy'],
         'notes': !exists(json, 'notes') ? undefined : json['notes'],
-        'users': !exists(json, 'users') ? undefined : Array&lt;LegacyUser&gt;FromJSON(json['users']),
+        'users': !exists(json, 'users') ? undefined : ((json['users'] as Array<any>).map(LegacyUserFromJSON)),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'type': !exists(json, 'type') ? undefined : json['type'],
         'subType': !exists(json, 'subType') ? undefined : json['subType'],
@@ -166,8 +172,8 @@ export function LegacyDocumentDocumentToJSON(value?: LegacyDocumentDocument | nu
     }
     return {
         
-        'files': Array&lt;LegacyDocumentFile&gt;ToJSON(value.files),
-        'contacts': Array&lt;LegacyContactContact&gt;ToJSON(value.contacts),
+        'files': value.files === undefined ? undefined : ((value.files as Array<any>).map(LegacyDocumentFileToJSON)),
+        'contacts': value.contacts === undefined ? undefined : ((value.contacts as Array<any>).map(LegacyContactContactToJSON)),
         'createdBy': value.createdBy,
         'createdOn': value.createdOn,
         'modifiedBy': value.modifiedBy,
@@ -178,7 +184,7 @@ export function LegacyDocumentDocumentToJSON(value?: LegacyDocumentDocument | nu
         'dateSignature': value.dateSignature,
         'writtenBy': value.writtenBy,
         'notes': value.notes,
-        'users': Array&lt;LegacyUser&gt;ToJSON(value.users),
+        'users': value.users === undefined ? undefined : ((value.users as Array<any>).map(LegacyUserToJSON)),
         'id': value.id,
         'type': value.type,
         'subType': value.subType,

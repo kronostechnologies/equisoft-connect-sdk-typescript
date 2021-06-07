@@ -18,11 +18,11 @@ import {
 } from './';
 
 import {
-     MovementClientBaseUsingDistributionListMovementFromJSONTyped,
-     MovementClientBaseUsingFileMovementFromJSONTyped,
-     MovementCopyMovementFromJSONTyped,
      MovementMoveMovementFromJSONTyped,
-     MovementReassignmentMovementFromJSONTyped
+     MovementCopyMovementFromJSONTyped,
+     MovementReassignmentMovementFromJSONTyped,
+     MovementClientBaseUsingDistributionListMovementFromJSONTyped,
+     MovementClientBaseUsingFileMovementFromJSONTyped
 } from './';
 
 /**
@@ -96,20 +96,20 @@ export function MovementMovementFromJSONTyped(json: any, ignoreDiscriminator: bo
         return json;
     }
     if (!ignoreDiscriminator) {
+        if (json['type'] === 'MOVE') {
+            return MovementMoveMovementFromJSONTyped(json, true);
+        }
+        if (json['type'] === 'COPY') {
+            return MovementCopyMovementFromJSONTyped(json, true);
+        }
+        if (json['type'] === 'REASSIGNMENT') {
+            return MovementReassignmentMovementFromJSONTyped(json, true);
+        }
         if (json['type'] === 'CLIENTBASE_USING_DISTLIST') {
             return MovementClientBaseUsingDistributionListMovementFromJSONTyped(json, true);
         }
         if (json['type'] === 'CLIENTBASE_USING_FILE') {
             return MovementClientBaseUsingFileMovementFromJSONTyped(json, true);
-        }
-        if (json['type'] === 'COPY') {
-            return MovementCopyMovementFromJSONTyped(json, true);
-        }
-        if (json['type'] === 'MOVE') {
-            return MovementMoveMovementFromJSONTyped(json, true);
-        }
-        if (json['type'] === 'REASSIGNMENT') {
-            return MovementReassignmentMovementFromJSONTyped(json, true);
         }
     }
     return {

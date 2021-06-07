@@ -12,6 +12,8 @@
 
 import {
     LegacyAddUpdateItem,
+    LegacyAddUpdateItemFromJSON,
+    LegacyAddUpdateItemToJSON,
 } from './';
 
 /**
@@ -38,7 +40,7 @@ export function LegacyAddUpdateResponseAllOfFromJSONTyped(json: any, _ignoreDisc
     }
     return {
         
-        'items': Array&lt;LegacyAddUpdateItem&gt;FromJSON(json['items']),
+        'items': ((json['items'] as Array<any>).map(LegacyAddUpdateItemFromJSON)),
     };
 }
 
@@ -51,7 +53,7 @@ export function LegacyAddUpdateResponseAllOfToJSON(value?: LegacyAddUpdateRespon
     }
     return {
         
-        'items': Array&lt;LegacyAddUpdateItem&gt;ToJSON(value.items),
+        'items': ((value.items as Array<any>).map(LegacyAddUpdateItemToJSON)),
     };
 }
 

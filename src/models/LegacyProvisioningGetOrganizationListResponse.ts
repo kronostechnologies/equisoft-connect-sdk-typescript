@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyProvisioningOrganizationItem,
+    LegacyProvisioningOrganizationItemFromJSON,
+    LegacyProvisioningOrganizationItemToJSON,
 } from './';
 
 /**
@@ -60,7 +62,7 @@ export function LegacyProvisioningGetOrganizationListResponseFromJSONTyped(json:
         'stat': !exists(json, 'stat') ? undefined : json['stat'],
         'errorCode': !exists(json, 'error_code') ? undefined : json['error_code'],
         'errorMsg': !exists(json, 'error_msg') ? undefined : json['error_msg'],
-        'organizations': Array&lt;LegacyProvisioningOrganizationItem&gt;FromJSON(json['organizations']),
+        'organizations': ((json['organizations'] as Array<any>).map(LegacyProvisioningOrganizationItemFromJSON)),
     };
 }
 
@@ -76,7 +78,7 @@ export function LegacyProvisioningGetOrganizationListResponseToJSON(value?: Lega
         'stat': value.stat,
         'error_code': value.errorCode,
         'error_msg': value.errorMsg,
-        'organizations': Array&lt;LegacyProvisioningOrganizationItem&gt;ToJSON(value.organizations),
+        'organizations': ((value.organizations as Array<any>).map(LegacyProvisioningOrganizationItemToJSON)),
     };
 }
 

@@ -13,7 +13,11 @@
 import { exists } from '../runtime';
 import {
     LegacyContactAddress,
+    LegacyContactAddressFromJSON,
+    LegacyContactAddressToJSON,
     LegacyProvisioningUserIdentifier,
+    LegacyProvisioningUserIdentifierFromJSON,
+    LegacyProvisioningUserIdentifierToJSON,
 } from './';
 
 /**
@@ -188,7 +192,7 @@ export function LegacyProvisioningUserPayloadFromJSONTyped(json: any, _ignoreDis
         'noPassword': !exists(json, 'noPassword') ? undefined : json['noPassword'],
         'requirePasswordChange': !exists(json, 'requirePasswordChange') ? undefined : json['requirePasswordChange'],
         'enableMobile': !exists(json, 'enableMobile') ? undefined : json['enableMobile'],
-        'externalIdentifiers': !exists(json, 'externalIdentifiers') ? undefined : Array&lt;LegacyProvisioningUserIdentifier&gt;FromJSON(json['externalIdentifiers']),
+        'externalIdentifiers': !exists(json, 'externalIdentifiers') ? undefined : ((json['externalIdentifiers'] as Array<any>).map(LegacyProvisioningUserIdentifierFromJSON)),
         'allowDelegation': !exists(json, 'allowDelegation') ? undefined : json['allowDelegation'],
         'gender': !exists(json, 'gender') ? undefined : json['gender'],
         'phoneWork': !exists(json, 'phoneWork') ? undefined : json['phoneWork'],
@@ -197,7 +201,7 @@ export function LegacyProvisioningUserPayloadFromJSONTyped(json: any, _ignoreDis
         'phoneCell': !exists(json, 'phoneCell') ? undefined : json['phoneCell'],
         'phoneFax': !exists(json, 'phoneFax') ? undefined : json['phoneFax'],
         'phoneMain': !exists(json, 'phoneMain') ? undefined : json['phoneMain'],
-        'address': !exists(json, 'address') ? undefined : Array&lt;LegacyContactAddress&gt;FromJSON(json['address']),
+        'address': !exists(json, 'address') ? undefined : ((json['address'] as Array<any>).map(LegacyContactAddressFromJSON)),
         'noFNA': !exists(json, 'noFNA') ? undefined : json['noFNA'],
     };
 }
@@ -221,7 +225,7 @@ export function LegacyProvisioningUserPayloadToJSON(value?: LegacyProvisioningUs
         'noPassword': value.noPassword,
         'requirePasswordChange': value.requirePasswordChange,
         'enableMobile': value.enableMobile,
-        'externalIdentifiers': Array&lt;LegacyProvisioningUserIdentifier&gt;ToJSON(value.externalIdentifiers),
+        'externalIdentifiers': value.externalIdentifiers === undefined ? undefined : ((value.externalIdentifiers as Array<any>).map(LegacyProvisioningUserIdentifierToJSON)),
         'allowDelegation': value.allowDelegation,
         'gender': value.gender,
         'phoneWork': value.phoneWork,
@@ -230,7 +234,7 @@ export function LegacyProvisioningUserPayloadToJSON(value?: LegacyProvisioningUs
         'phoneCell': value.phoneCell,
         'phoneFax': value.phoneFax,
         'phoneMain': value.phoneMain,
-        'address': Array&lt;LegacyContactAddress&gt;ToJSON(value.address),
+        'address': value.address === undefined ? undefined : ((value.address as Array<any>).map(LegacyContactAddressToJSON)),
         'noFNA': value.noFNA,
     };
 }

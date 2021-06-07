@@ -13,6 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyDocumentDocument,
+    LegacyDocumentDocumentFromJSON,
+    LegacyDocumentDocumentToJSON,
 } from './';
 
 /**
@@ -60,7 +62,7 @@ export function LegacyDocumentGetResponseFromJSONTyped(json: any, _ignoreDiscrim
         'stat': !exists(json, 'stat') ? undefined : json['stat'],
         'errorCode': !exists(json, 'error_code') ? undefined : json['error_code'],
         'errorMsg': !exists(json, 'error_msg') ? undefined : json['error_msg'],
-        'documents': Array&lt;LegacyDocumentDocument&gt;FromJSON(json['documents']),
+        'documents': ((json['documents'] as Array<any>).map(LegacyDocumentDocumentFromJSON)),
     };
 }
 
@@ -76,7 +78,7 @@ export function LegacyDocumentGetResponseToJSON(value?: LegacyDocumentGetRespons
         'stat': value.stat,
         'error_code': value.errorCode,
         'error_msg': value.errorMsg,
-        'documents': Array&lt;LegacyDocumentDocument&gt;ToJSON(value.documents),
+        'documents': ((value.documents as Array<any>).map(LegacyDocumentDocumentToJSON)),
     };
 }
 
