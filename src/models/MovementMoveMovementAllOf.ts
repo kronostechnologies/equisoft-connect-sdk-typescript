@@ -15,8 +15,6 @@ import {
     MovementDatabaseFromJSON,
     MovementDatabaseToJSON,
     MovementUser,
-    MovementUserFromJSON,
-    MovementUserToJSON,
 } from './';
 
 /**
@@ -64,7 +62,7 @@ export function MovementMoveMovementAllOfFromJSONTyped(json: any, _ignoreDiscrim
         'type': json['type'],
         'sourceDatabase': MovementDatabaseFromJSON(json['sourceDatabase']),
         'destinationDatabase': MovementDatabaseFromJSON(json['destinationDatabase']),
-        'users': ((json['users'] as Array<any>).map(MovementUserFromJSON)),
+        'users': Array&lt;MovementUser&gt;FromJSON(json['users']),
     };
 }
 
@@ -80,7 +78,7 @@ export function MovementMoveMovementAllOfToJSON(value?: MovementMoveMovementAllO
         'type': value.type,
         'sourceDatabase': MovementDatabaseToJSON(value.sourceDatabase),
         'destinationDatabase': MovementDatabaseToJSON(value.destinationDatabase),
-        'users': ((value.users as Array<any>).map(MovementUserToJSON)),
+        'users': Array&lt;MovementUser&gt;ToJSON(value.users),
     };
 }
 

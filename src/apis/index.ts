@@ -1,4 +1,5 @@
 export * from './DSFApi';
+export * from './DatabasesApi';
 export * from './EventsApi';
 export * from './GatewaysApi';
 export * from './IntegrationsApi';
@@ -6,5 +7,6 @@ export * from './LegacyDocumentApi';
 export * from './LegacyProvisioningApi';
 export * from './MovementApi';
 export * from './MxApi';
+export * from './RemoteAccountApi';
 export * from './TasksApi';
 export * from './UsersApi';

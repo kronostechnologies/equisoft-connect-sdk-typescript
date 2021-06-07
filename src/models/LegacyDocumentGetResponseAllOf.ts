@@ -12,8 +12,6 @@
 
 import {
     LegacyDocumentDocument,
-    LegacyDocumentDocumentFromJSON,
-    LegacyDocumentDocumentToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function LegacyDocumentGetResponseAllOfFromJSONTyped(json: any, _ignoreDi
     }
     return {
         
-        'documents': ((json['documents'] as Array<any>).map(LegacyDocumentDocumentFromJSON)),
+        'documents': Array&lt;LegacyDocumentDocument&gt;FromJSON(json['documents']),
     };
 }
 
@@ -53,7 +51,7 @@ export function LegacyDocumentGetResponseAllOfToJSON(value?: LegacyDocumentGetRe
     }
     return {
         
-        'documents': ((value.documents as Array<any>).map(LegacyDocumentDocumentToJSON)),
+        'documents': Array&lt;LegacyDocumentDocument&gt;ToJSON(value.documents),
     };
 }
 

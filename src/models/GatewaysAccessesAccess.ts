@@ -12,8 +12,6 @@
 
 import {
     GatewaysAccessesUser,
-    GatewaysAccessesUserFromJSON,
-    GatewaysAccessesUserToJSON,
 } from './';
 
 import {
@@ -56,7 +54,7 @@ export function GatewaysAccessesAccessFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'id': json['id'],
-        'users': ((json['users'] as Array<any>).map(GatewaysAccessesUserFromJSON)),
+        'users': Array&lt;GatewaysAccessesUser&gt;FromJSON(json['users']),
     };
 }
 
@@ -70,7 +68,7 @@ export function GatewaysAccessesAccessToJSON(value?: GatewaysAccessesAccess | nu
     return {
         
         'id': value.id,
-        'users': ((value.users as Array<any>).map(GatewaysAccessesUserToJSON)),
+        'users': Array&lt;GatewaysAccessesUser&gt;ToJSON(value.users),
     };
 }
 

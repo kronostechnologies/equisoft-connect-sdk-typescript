@@ -13,8 +13,6 @@
 import { exists } from '../runtime';
 import {
     LegacyProvisioningUserItem,
-    LegacyProvisioningUserItemFromJSON,
-    LegacyProvisioningUserItemToJSON,
 } from './';
 
 /**
@@ -161,7 +159,7 @@ export function LegacyProvisioningOrganizationItemFromJSONTyped(json: any, _igno
         'webSite': !exists(json, 'webSite') ? undefined : json['webSite'],
         'isMultiUser': !exists(json, 'isMultiUser') ? undefined : json['isMultiUser'],
         'fnaStatus': !exists(json, 'fnaStatus') ? undefined : json['fnaStatus'],
-        'users': !exists(json, 'users') ? undefined : ((json['users'] as Array<any>).map(LegacyProvisioningUserItemFromJSON)),
+        'users': !exists(json, 'users') ? undefined : Array&lt;LegacyProvisioningUserItem&gt;FromJSON(json['users']),
     };
 }
 
@@ -191,7 +189,7 @@ export function LegacyProvisioningOrganizationItemToJSON(value?: LegacyProvision
         'webSite': value.webSite,
         'isMultiUser': value.isMultiUser,
         'fnaStatus': value.fnaStatus,
-        'users': value.users === undefined ? undefined : ((value.users as Array<any>).map(LegacyProvisioningUserItemToJSON)),
+        'users': Array&lt;LegacyProvisioningUserItem&gt;ToJSON(value.users),
     };
 }
 

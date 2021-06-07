@@ -98,7 +98,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:datagateway"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -138,7 +138,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:datagateway"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -151,7 +151,6 @@ export class GatewaysApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -190,7 +189,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:authentication"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -224,7 +223,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -273,7 +272,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:validation"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -311,7 +310,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:datagateway"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -349,7 +348,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -389,7 +388,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:generic"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -433,7 +432,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:datagateway"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -447,7 +446,6 @@ export class GatewaysApi extends runtime.BaseAPI {
             body: GatewaysAccessesPatchEquisoftAnalyzeAccessPayloadToJSON(requestParameters.gatewaysAccessesPatchEquisoftAnalyzeAccessPayload),
         });
 
-        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -475,7 +473,7 @@ export class GatewaysApi extends runtime.BaseAPI {
 
         const queryParameters: runtime.HTTPQuery = {};
 
-        if (requestParameters.credentialIds) {
+        if (requestParameters.credentialIds !== undefined) {
             queryParameters['credentialIds'] = requestParameters.credentialIds;
         }
 
@@ -488,7 +486,7 @@ export class GatewaysApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:gateway:validation"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }

@@ -13,8 +13,6 @@
 import { exists } from '../runtime';
 import {
     EventsEvent,
-    EventsEventFromJSON,
-    EventsEventToJSON,
 } from './';
 
 /**
@@ -48,7 +46,7 @@ export function EventsListEventResponseFromJSONTyped(json: any, _ignoreDiscrimin
     return {
         
         'nextPageToken': !exists(json, 'nextPageToken') ? undefined : json['nextPageToken'],
-        'items': ((json['items'] as Array<any>).map(EventsEventFromJSON)),
+        'items': Array&lt;EventsEvent&gt;FromJSON(json['items']),
     };
 }
 
@@ -62,7 +60,7 @@ export function EventsListEventResponseToJSON(value?: EventsListEventResponse | 
     return {
         
         'nextPageToken': value.nextPageToken,
-        'items': ((value.items as Array<any>).map(EventsEventToJSON)),
+        'items': Array&lt;EventsEvent&gt;ToJSON(value.items),
     };
 }
 

@@ -12,8 +12,6 @@
 
 import {
     LegacyDocumentBase64FilePayloadItem,
-    LegacyDocumentBase64FilePayloadItemFromJSON,
-    LegacyDocumentBase64FilePayloadItemToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function LegacyDocumentDownloadFileResponseAllOfFromJSONTyped(json: any, 
     }
     return {
         
-        'files': ((json['files'] as Array<any>).map(LegacyDocumentBase64FilePayloadItemFromJSON)),
+        'files': Array&lt;LegacyDocumentBase64FilePayloadItem&gt;FromJSON(json['files']),
     };
 }
 
@@ -53,7 +51,7 @@ export function LegacyDocumentDownloadFileResponseAllOfToJSON(value?: LegacyDocu
     }
     return {
         
-        'files': ((value.files as Array<any>).map(LegacyDocumentBase64FilePayloadItemToJSON)),
+        'files': Array&lt;LegacyDocumentBase64FilePayloadItem&gt;ToJSON(value.files),
     };
 }
 

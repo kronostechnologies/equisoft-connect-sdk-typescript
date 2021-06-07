@@ -12,8 +12,6 @@
 
 import {
     LegacyProvisioningOrganizationItem,
-    LegacyProvisioningOrganizationItemFromJSON,
-    LegacyProvisioningOrganizationItemToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function LegacyProvisioningGetOrganizationListResponseAllOfFromJSONTyped(
     }
     return {
         
-        'organizations': ((json['organizations'] as Array<any>).map(LegacyProvisioningOrganizationItemFromJSON)),
+        'organizations': Array&lt;LegacyProvisioningOrganizationItem&gt;FromJSON(json['organizations']),
     };
 }
 
@@ -53,7 +51,7 @@ export function LegacyProvisioningGetOrganizationListResponseAllOfToJSON(value?:
     }
     return {
         
-        'organizations': ((value.organizations as Array<any>).map(LegacyProvisioningOrganizationItemToJSON)),
+        'organizations': Array&lt;LegacyProvisioningOrganizationItem&gt;ToJSON(value.organizations),
     };
 }
 

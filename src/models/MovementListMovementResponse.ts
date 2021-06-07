@@ -12,8 +12,6 @@
 
 import {
     MovementMovement,
-    MovementMovementFromJSON,
-    MovementMovementToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function MovementListMovementResponseFromJSONTyped(json: any, _ignoreDisc
     }
     return {
         
-        'items': ((json['items'] as Array<any>).map(MovementMovementFromJSON)),
+        'items': Array&lt;MovementMovement&gt;FromJSON(json['items']),
     };
 }
 
@@ -53,7 +51,7 @@ export function MovementListMovementResponseToJSON(value?: MovementListMovementR
     }
     return {
         
-        'items': ((value.items as Array<any>).map(MovementMovementToJSON)),
+        'items': Array&lt;MovementMovement&gt;ToJSON(value.items),
     };
 }
 

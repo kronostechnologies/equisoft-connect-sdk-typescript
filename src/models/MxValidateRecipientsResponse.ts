@@ -12,8 +12,6 @@
 
 import {
     MxRecipient,
-    MxRecipientFromJSON,
-    MxRecipientToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function MxValidateRecipientsResponseFromJSONTyped(json: any, _ignoreDisc
     }
     return {
         
-        'invalidRecipients': ((json['invalidRecipients'] as Array<any>).map(MxRecipientFromJSON)),
+        'invalidRecipients': Array&lt;MxRecipient&gt;FromJSON(json['invalidRecipients']),
     };
 }
 
@@ -53,7 +51,7 @@ export function MxValidateRecipientsResponseToJSON(value?: MxValidateRecipientsR
     }
     return {
         
-        'invalidRecipients': ((value.invalidRecipients as Array<any>).map(MxRecipientToJSON)),
+        'invalidRecipients': Array&lt;MxRecipient&gt;ToJSON(value.invalidRecipients),
     };
 }
 

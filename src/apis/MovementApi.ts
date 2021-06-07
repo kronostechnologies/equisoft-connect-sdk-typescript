@@ -60,7 +60,7 @@ export class MovementApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:movement"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -98,7 +98,7 @@ export class MovementApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:movement"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -111,7 +111,6 @@ export class MovementApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -135,7 +134,7 @@ export class MovementApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:movement"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -148,7 +147,6 @@ export class MovementApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
@@ -172,7 +170,7 @@ export class MovementApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:movement"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }
@@ -205,7 +203,7 @@ export class MovementApi extends runtime.BaseAPI {
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             if (typeof this.configuration.accessToken === 'function') {
-                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", ["crm:movement"]);
+                headerParameters["Authorization"] = this.configuration.accessToken("OAuth2", []);
             } else {
                 headerParameters["Authorization"] = this.configuration.accessToken;
             }

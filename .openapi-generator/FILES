@@ -3,6 +3,7 @@
 README.md
 package.json
 src/apis/DSFApi.ts
+src/apis/DatabasesApi.ts
 src/apis/EventsApi.ts
 src/apis/GatewaysApi.ts
 src/apis/IntegrationsApi.ts
@@ -10,6 +11,7 @@ src/apis/LegacyDocumentApi.ts
 src/apis/LegacyProvisioningApi.ts
 src/apis/MovementApi.ts
 src/apis/MxApi.ts
+src/apis/RemoteAccountApi.ts
 src/apis/TasksApi.ts
 src/apis/UsersApi.ts
 src/apis/index.ts
@@ -29,6 +31,8 @@ src/models/ContextUser.ts
 src/models/ContextUserContext.ts
 src/models/CredentialDto.ts
 src/models/CredentialsResponse.ts
+src/models/DatabasesDatabase.ts
+src/models/DatabasesListDatabasesResponse.ts
 src/models/DateOrDateTime.ts
 src/models/DsfCreateOrUpdateFinancialCenterResponse.ts
 src/models/DsfFinancialCenter.ts
@@ -149,6 +153,9 @@ src/models/MovementValidationErrorResponse.ts
 src/models/MxRecipient.ts
 src/models/MxRecipientsPayload.ts
 src/models/MxValidateRecipientsResponse.ts
+src/models/RemoteaccountAccountSyncResponse.ts
+src/models/RemoteaccountSyncStatus.ts
+src/models/RemoteaccountSyncTaskStatus.ts
 src/models/TasksCreateTaskPayload.ts
 src/models/TasksCreateTaskResponse.ts
 src/models/TasksDueDateFilter.ts

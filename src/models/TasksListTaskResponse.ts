@@ -13,8 +13,6 @@
 import { exists } from '../runtime';
 import {
     TasksTask,
-    TasksTaskFromJSON,
-    TasksTaskToJSON,
 } from './';
 
 /**
@@ -48,7 +46,7 @@ export function TasksListTaskResponseFromJSONTyped(json: any, _ignoreDiscriminat
     return {
         
         'nextPageToken': !exists(json, 'nextPageToken') ? undefined : json['nextPageToken'],
-        'items': ((json['items'] as Array<any>).map(TasksTaskFromJSON)),
+        'items': Array&lt;TasksTask&gt;FromJSON(json['items']),
     };
 }
 
@@ -62,7 +60,7 @@ export function TasksListTaskResponseToJSON(value?: TasksListTaskResponse | null
     return {
         
         'nextPageToken': value.nextPageToken,
-        'items': ((value.items as Array<any>).map(TasksTaskToJSON)),
+        'items': Array&lt;TasksTask&gt;ToJSON(value.items),
     };
 }
 

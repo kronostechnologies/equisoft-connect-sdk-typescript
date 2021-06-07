@@ -16,8 +16,6 @@ import {
     MovementMovementPayloadFromJSONTyped,
     MovementMovementPayloadToJSON,
     MovementUserTuplePayload,
-    MovementUserTuplePayloadFromJSON,
-    MovementUserTuplePayloadToJSON,
 } from './';
 
 /**
@@ -65,7 +63,7 @@ export function MovementCopyMovementPayloadFromJSONTyped(json: any, ignoreDiscri
         'type': json['type'],
         'sourceDatabase': json['sourceDatabase'],
         'destinationDatabase': json['destinationDatabase'],
-        'userTuples': !exists(json, 'userTuples') ? undefined : ((json['userTuples'] as Array<any>).map(MovementUserTuplePayloadFromJSON)),
+        'userTuples': !exists(json, 'userTuples') ? undefined : Array&lt;MovementUserTuplePayload&gt;FromJSON(json['userTuples']),
     };
 }
 
@@ -81,7 +79,7 @@ export function MovementCopyMovementPayloadToJSON(value?: MovementCopyMovementPa
         'type': value.type,
         'sourceDatabase': value.sourceDatabase,
         'destinationDatabase': value.destinationDatabase,
-        'userTuples': value.userTuples === undefined ? undefined : ((value.userTuples as Array<any>).map(MovementUserTuplePayloadToJSON)),
+        'userTuples': Array&lt;MovementUserTuplePayload&gt;ToJSON(value.userTuples),
     };
 }
 

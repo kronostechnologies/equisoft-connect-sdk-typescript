@@ -13,8 +13,6 @@
 import { exists } from '../runtime';
 import {
     LegacyDocumentDocumentListItem,
-    LegacyDocumentDocumentListItemFromJSON,
-    LegacyDocumentDocumentListItemToJSON,
 } from './';
 
 /**
@@ -62,7 +60,7 @@ export function LegacyDocumentGetListResponseFromJSONTyped(json: any, _ignoreDis
         'stat': !exists(json, 'stat') ? undefined : json['stat'],
         'errorCode': !exists(json, 'error_code') ? undefined : json['error_code'],
         'errorMsg': !exists(json, 'error_msg') ? undefined : json['error_msg'],
-        'documents': ((json['documents'] as Array<any>).map(LegacyDocumentDocumentListItemFromJSON)),
+        'documents': Array&lt;LegacyDocumentDocumentListItem&gt;FromJSON(json['documents']),
     };
 }
 
@@ -78,7 +76,7 @@ export function LegacyDocumentGetListResponseToJSON(value?: LegacyDocumentGetLis
         'stat': value.stat,
         'error_code': value.errorCode,
         'error_msg': value.errorMsg,
-        'documents': ((value.documents as Array<any>).map(LegacyDocumentDocumentListItemToJSON)),
+        'documents': Array&lt;LegacyDocumentDocumentListItem&gt;ToJSON(value.documents),
     };
 }
 

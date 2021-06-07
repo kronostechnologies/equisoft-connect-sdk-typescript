@@ -12,8 +12,6 @@
 
 import {
     GatewaysAccessesAccess,
-    GatewaysAccessesAccessFromJSON,
-    GatewaysAccessesAccessToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function GatewaysAccessesListGatewayAccessesResponseFromJSONTyped(json: a
     }
     return {
         
-        'items': ((json['items'] as Array<any>).map(GatewaysAccessesAccessFromJSON)),
+        'items': Array&lt;GatewaysAccessesAccess&gt;FromJSON(json['items']),
     };
 }
 
@@ -53,7 +51,7 @@ export function GatewaysAccessesListGatewayAccessesResponseToJSON(value?: Gatewa
     }
     return {
         
-        'items': ((value.items as Array<any>).map(GatewaysAccessesAccessToJSON)),
+        'items': Array&lt;GatewaysAccessesAccess&gt;ToJSON(value.items),
     };
 }
 

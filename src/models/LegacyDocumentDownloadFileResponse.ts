@@ -13,8 +13,6 @@
 import { exists } from '../runtime';
 import {
     LegacyDocumentBase64FilePayloadItem,
-    LegacyDocumentBase64FilePayloadItemFromJSON,
-    LegacyDocumentBase64FilePayloadItemToJSON,
 } from './';
 
 /**
@@ -62,7 +60,7 @@ export function LegacyDocumentDownloadFileResponseFromJSONTyped(json: any, _igno
         'stat': !exists(json, 'stat') ? undefined : json['stat'],
         'errorCode': !exists(json, 'error_code') ? undefined : json['error_code'],
         'errorMsg': !exists(json, 'error_msg') ? undefined : json['error_msg'],
-        'files': ((json['files'] as Array<any>).map(LegacyDocumentBase64FilePayloadItemFromJSON)),
+        'files': Array&lt;LegacyDocumentBase64FilePayloadItem&gt;FromJSON(json['files']),
     };
 }
 
@@ -78,7 +76,7 @@ export function LegacyDocumentDownloadFileResponseToJSON(value?: LegacyDocumentD
         'stat': value.stat,
         'error_code': value.errorCode,
         'error_msg': value.errorMsg,
-        'files': ((value.files as Array<any>).map(LegacyDocumentBase64FilePayloadItemToJSON)),
+        'files': Array&lt;LegacyDocumentBase64FilePayloadItem&gt;ToJSON(value.files),
     };
 }
 

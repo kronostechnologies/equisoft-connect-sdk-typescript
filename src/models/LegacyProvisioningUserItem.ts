@@ -13,14 +13,8 @@
 import { exists } from '../runtime';
 import {
     LegacyContactAddress,
-    LegacyContactAddressFromJSON,
-    LegacyContactAddressToJSON,
     LegacyProvisioningGroupItem,
-    LegacyProvisioningGroupItemFromJSON,
-    LegacyProvisioningGroupItemToJSON,
     LegacyProvisioningUserIdentifier,
-    LegacyProvisioningUserIdentifierFromJSON,
-    LegacyProvisioningUserIdentifierToJSON,
 } from './';
 
 /**
@@ -220,9 +214,9 @@ export function LegacyProvisioningUserItemFromJSONTyped(json: any, _ignoreDiscri
         'phoneHome': !exists(json, 'phoneHome') ? undefined : json['phoneHome'],
         'phoneCell': !exists(json, 'phoneCell') ? undefined : json['phoneCell'],
         'phoneFax': !exists(json, 'phoneFax') ? undefined : json['phoneFax'],
-        'address': !exists(json, 'address') ? undefined : ((json['address'] as Array<any>).map(LegacyContactAddressFromJSON)),
-        'groups': !exists(json, 'groups') ? undefined : ((json['groups'] as Array<any>).map(LegacyProvisioningGroupItemFromJSON)),
-        'externalIdentifiers': !exists(json, 'externalIdentifiers') ? undefined : ((json['externalIdentifiers'] as Array<any>).map(LegacyProvisioningUserIdentifierFromJSON)),
+        'address': !exists(json, 'address') ? undefined : Array&lt;LegacyContactAddress&gt;FromJSON(json['address']),
+        'groups': !exists(json, 'groups') ? undefined : Array&lt;LegacyProvisioningGroupItem&gt;FromJSON(json['groups']),
+        'externalIdentifiers': !exists(json, 'externalIdentifiers') ? undefined : Array&lt;LegacyProvisioningUserIdentifier&gt;FromJSON(json['externalIdentifiers']),
         'allowDelegation': !exists(json, 'allowDelegation') ? undefined : json['allowDelegation'],
         'deletable': !exists(json, 'deletable') ? undefined : json['deletable'],
     };
@@ -257,9 +251,9 @@ export function LegacyProvisioningUserItemToJSON(value?: LegacyProvisioningUserI
         'phoneHome': value.phoneHome,
         'phoneCell': value.phoneCell,
         'phoneFax': value.phoneFax,
-        'address': value.address === undefined ? undefined : ((value.address as Array<any>).map(LegacyContactAddressToJSON)),
-        'groups': value.groups === undefined ? undefined : ((value.groups as Array<any>).map(LegacyProvisioningGroupItemToJSON)),
-        'externalIdentifiers': value.externalIdentifiers === undefined ? undefined : ((value.externalIdentifiers as Array<any>).map(LegacyProvisioningUserIdentifierToJSON)),
+        'address': Array&lt;LegacyContactAddress&gt;ToJSON(value.address),
+        'groups': Array&lt;LegacyProvisioningGroupItem&gt;ToJSON(value.groups),
+        'externalIdentifiers': Array&lt;LegacyProvisioningUserIdentifier&gt;ToJSON(value.externalIdentifiers),
         'allowDelegation': value.allowDelegation,
         'deletable': value.deletable,
     };

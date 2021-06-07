@@ -12,8 +12,6 @@
 
 import {
     GatewaysCredentials,
-    GatewaysCredentialsFromJSON,
-    GatewaysCredentialsToJSON,
 } from './';
 
 /**
@@ -40,7 +38,7 @@ export function GatewaysListCredentialsResponseFromJSONTyped(json: any, _ignoreD
     }
     return {
         
-        'credentials': ((json['credentials'] as Array<any>).map(GatewaysCredentialsFromJSON)),
+        'credentials': Array&lt;GatewaysCredentials&gt;FromJSON(json['credentials']),
     };
 }
 
@@ -53,7 +51,7 @@ export function GatewaysListCredentialsResponseToJSON(value?: GatewaysListCreden
     }
     return {
         
-        'credentials': ((value.credentials as Array<any>).map(GatewaysCredentialsToJSON)),
+        'credentials': Array&lt;GatewaysCredentials&gt;ToJSON(value.credentials),
     };
 }
 
